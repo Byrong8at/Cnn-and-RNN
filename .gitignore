@@ -10,3 +10,6 @@ old/
 env/
 __pycache__/
 .ipynb_checkpoints/
+**/data/
+**/.venv/
+**/__pycache__/
