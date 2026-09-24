@@ -19,14 +19,20 @@ val_loss=np.inf
 l2_lambda=0.03
 
 #Load image dataset
-BASE_DIR = Path(__file__).resolve().parent
-X_train, y_train = data_loading(str(BASE_DIR / "img_64x64" / "train"))
-X_test, y_test = data_loading(str(BASE_DIR / "img_64x64" / "test"))
+BASE_DIR = Path(__file__).resolve().parent.parent
+#X_train, y_train = data_loading(str(BASE_DIR / "img_64x64" / "train"))
+#X_test, y_test = data_loading(str(BASE_DIR / "img_64x64" / "test"))
+X_all, y_all = data_loading(str(BASE_DIR / "data" / "process" / "64x64"))
+print("Labels uniques dans tout le dataset (y_all) :", np.unique(y_all))
+X_all = resize(X_all)
+# Séparation en Train, Validation et Test (ex: 70% / 15% / 15%)
+X_train, X_val, X_test, y_train, y_val, y_test = train_val_test_split(
+    X_all, y_all, val_ratio=0.15, test_ratio=0.15
+)
 
 #Resize and reshape
-X_train=resize(X_train)
-X_test=resize(X_test)
-
+#X_train=resize(X_train)
+#X_test=resize(X_test)
 X_train,y_train=new_img(X_train,y_train)
 
 X_train=reshape(X_train)

@@ -17,7 +17,7 @@ def data_loading(folder_path):
         if not os.path.isdir(class_folder):
             continue  
 
-        if "fake" in label.lower():
+        if "false" in label.lower():
             numeric_label = 0
         else:
             numeric_label = 1
@@ -34,6 +34,27 @@ def data_loading(folder_path):
                     print(f"Erreur lecture {filename}: {e}")
 
     return x, np.array(y)
+
+def train_val_test_split(X, y, val_ratio=0.15, test_ratio=0.15):
+    """
+    Sépare les données aléatoirement en Train, Validation et Test.
+    Par défaut : 70% Train, 15% Validation, 15% Test.
+    """
+    # Mélanger les indices aléatoirement
+    indices = np.random.permutation(len(X))
+    
+    # Calculer le nombre d'images pour le test et la validation
+    test_size = int(len(X) * test_ratio)
+    val_size = int(len(X) * val_ratio)
+    
+    # Séparer les indices
+    test_idx = indices[:test_size]
+    val_idx = indices[test_size : test_size + val_size]
+    train_idx = indices[test_size + val_size:]
+    
+    # Retourner les 3 jeux de données
+    return (X[train_idx], X[val_idx], X[test_idx], 
+            y[train_idx], y[val_idx], y[test_idx])
 
 def resize(x, size=(64, 64)):
     """
@@ -68,6 +89,8 @@ def new_img(X,y):
     
     diff = len(true_img) - len(fake_img)
 
+    if diff == 0:
+        return X, y
     if diff > 0:
         clone = np.random.choice(fake_img, size=diff, replace=True)
         
@@ -76,6 +99,16 @@ def new_img(X,y):
 
         x_supp = np.array([np.fliplr(img) for img in x_supp])
 
+        X = np.concatenate([X, x_supp], axis=0)
+        y = np.concatenate([y, y_supp], axis=0)
+    else:
+        clone = np.random.choice(true_img, size=abs(diff), replace=True)
+                
+        x_supp = X[clone]
+        y_supp = y[clone]
+        
+        x_supp = np.array([np.fliplr(img) for img in x_supp])
+        
         X = np.concatenate([X, x_supp], axis=0)
         y = np.concatenate([y, y_supp], axis=0)
         
