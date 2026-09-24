@@ -1,0 +1,12 @@
+# Created by venv; see https://docs.python.org/3/library/venv.html
+*
+data/
+old/
+64/
+128/
+256/
+512/
+1024/
+env/
+__pycache__/
+.ipynb_checkpoints/
