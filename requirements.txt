@@ -1,0 +1,4 @@
+matplotlib
+gdown
+tensorflow
+numpy
