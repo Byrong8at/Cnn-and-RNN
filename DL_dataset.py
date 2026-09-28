@@ -4,6 +4,7 @@ import gdown
 import zipfile
 from pathlib import Path
 import shutil
+import tensorflow as tf
 
 #Choisir les étapes qu'on souhaite lancé comme le dl des fichiers, l extraction etc...
 
@@ -71,5 +72,16 @@ def copy(folder):
 
 
 
-
+def Check_corruption(dossier_racine):
+    for filepath in dossier_racine.rglob('*'):
+        if filepath.is_file():
+            try:
+                # Attempt to read and decode the image exactly as the dataset pipeline does
+                image_contents = tf.io.read_file(str(filepath))
+                _ = tf.image.decode_image(image_contents, expand_animations=False)
+            except tf.errors.InvalidArgumentError:
+                print(f"Corrupted image detected and deleted: {filepath}")
+                os.remove(filepath) # Deletes the bad file automatically
+            except Exception as e:
+                print(f"Other issue with file {filepath}: {e}")
 
