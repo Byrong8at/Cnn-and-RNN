@@ -1,4 +1,7 @@
-matplotlib
-gdown
+gdown==6.4.0
 tensorflow
 numpy
+matplotlib
+pandas
+scikit-learn
+plotly
