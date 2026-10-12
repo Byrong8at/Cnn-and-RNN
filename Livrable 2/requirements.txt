@@ -5,5 +5,4 @@ matplotlib
 scikit-learn
 tensorflow
 pydot
-plotly
 tensorflow
