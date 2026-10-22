@@ -3,6 +3,7 @@ pandas
 numpy
 matplotlib
 scikit-learn
-tensorflow
 pydot
+nltk
+pycocoevalcap
 tensorflow
