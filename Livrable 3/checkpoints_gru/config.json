@@ -1,0 +1,13 @@
+{
+  "vocab_size": 7000,
+  "max_length": 20,
+  "embedding_dim": 256,
+  "rnn_units": 512,
+  "start_token_id": 3,
+  "end_token_id": 4,
+  "image_size": [
+    299,
+    299
+  ],
+  "rnn_type": "gru"
+}
